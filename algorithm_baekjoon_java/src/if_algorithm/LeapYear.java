@@ -18,5 +18,4 @@ public class LeapYear {
 			System.out.println(0);
 		}
 	}
-
 }
