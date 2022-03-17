@@ -17,7 +17,6 @@ public class Alarm {
 			}else {
 				System.out.println((h-1)+" "+(60-(45-m)));
 			}
-			
 		}
 	}
 
