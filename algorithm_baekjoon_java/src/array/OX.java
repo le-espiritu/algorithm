@@ -9,8 +9,12 @@ public class OX {
 		int num = sc.nextInt();
 
 		
+		//String.charAt() 문자열에서 문자 추출
+		//String.subString() 문자열에서 문자 추출
+		//String.subString(3) => 3번 인덱스 부터 뽑기
+		//String.subString(2,4) => 2번 인덱스부터 4번 인덱스 전까지 뽑기  
+		
 		for(int i =0; i<num; i++) {
-			//int count=0;
 			int score =0;
 			int count= 0;
 			String str = sc.next();
