@@ -5,7 +5,7 @@ import java.util.Scanner;
 // 백준 1157번 단어 공부 알고리즘 문제를 풀이한 코드  
 // 알파벳 대소문자로 된 단어가 주어지면, 이 단어에서 가장 많이 사용된 알파벳이 무엇인지 알아내는 프로그램을 작성하시오 
 
-public class wordStudy {
+public class WordStudy {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String word = sc.next();
