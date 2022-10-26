@@ -1,4 +1,4 @@
-package ArrayPlanar;
+package arrayPlanar;
 
 import java.util.Scanner;
 
