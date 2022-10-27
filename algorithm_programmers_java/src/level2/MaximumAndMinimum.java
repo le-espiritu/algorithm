@@ -3,7 +3,7 @@ package level2;
 
 import java.util.Scanner;
 
-public class MaximAndMinimum {
+public class MaximumAndMinimum {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -14,6 +14,9 @@ public class MaximAndMinimum {
 		sc.close();
 		
 	}
+	
+	
+	// 프로그래머스 레벨2 최댓값과 최솟값 구하기 문제  
 	
 	public static String solution(String s) {
 		String[] arrS = s.split(" ");
