@@ -21,7 +21,7 @@ public class RemovePair {
 		Stack<Character> st = new Stack<>(); // 객체형태만 담을 수 있음. 기본형 타입 담을 수 없음.
 		for(int i=0; i<s.length(); i++) {
 			char c = s.charAt(i);
-			if(!st.isEmpty() && st.peek()==c) {
+			if(!st.isEmpty() && st.peek()==c) { // stack의 peek()메서드는 스택에서 top에 있는 데이터를 반환한다.
 				st.pop();
 			}else {
 				st.push(c);
