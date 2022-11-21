@@ -19,6 +19,8 @@ public class CoordinateSort2 {
 		}
 		
 		for(int i=0; i<arr.length; i++) {
+			String v = arr[i];
+			
 			String[] strV = arr[i].split(" ");
 			int vx = Integer.parseInt(strV[0]);
 			int vy = Integer.parseInt(strV[1]);
@@ -29,16 +31,19 @@ public class CoordinateSort2 {
 				int vy2 = Integer.parseInt(strV2[1]);
 				if(vy2>vy) {
 					arr[j+1]=arr[j];
-				}else if(vy2==vy) {
-					if(vx2>vx) {
-						arr[j+1]=arr[j];
-					}
 				}else {
+					if(vy2==vy) {
+						if(vx2>vx) {
+							String tmp = v;
+							v=arr[j];
+							arr[j]=v;
+						}
+					}
 					break;
 				}
 			}
 			
-			arr[j+1]=arr[i];
+			arr[j+1]=v;
 		}
 		
 		for(int i=0; i<arr.length; i++) {
