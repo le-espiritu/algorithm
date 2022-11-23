@@ -60,6 +60,7 @@ public class KakaoTuple {
 	}
 	
 	
+	
 	// 다른분이 푸신 풀이 
 	public int[] solution2(String s) {
         Set<String> set = new HashSet<>();
