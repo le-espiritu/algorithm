@@ -45,8 +45,7 @@ public class RobotVacuum {
 		int[] xd = {0,1,0,-1};
 		
 		int count=0;
-		
-		
+	
 		
 		for(int i =0; i<n; i++) {
 			st=new StringTokenizer(br.readLine());
@@ -54,7 +53,7 @@ public class RobotVacuum {
 				map[i][j]=Integer.parseInt(st.nextToken());
 			}
 		}
-		
+		br.close();
 		
 		while(true) {
 			if(map[y][x]==0) {
@@ -63,7 +62,6 @@ public class RobotVacuum {
 			}
 			
 			boolean flag = false;
-			int originD=d;
 			for(int i=0; i<4; i++) { // 청소하지 않은 공간을 찾을때까지 왼쪽으로 회전 
 				d=(d+3)%4; // 왼쪽 방향으로 한칸 회전한 값은 d-1 이다. 그러나 d-1을 하면 인덱스값이 음수가 나올 수도 있다.
 				// 자바에서는 인덱스 값이 음수가 나올 수 없다.
@@ -86,14 +84,14 @@ public class RobotVacuum {
 			// 4방향 모두 있지 않은 경우 
 			if(!flag) {
 				// 뒤쪽 방향이 막혀있는지 확인
-				int ny = y - yd[originD];
-				int nx = x - xd[originD];
-				if(ny>=0 && ny<n && nx>=0 && nx<m) {
-					if(map[ny][nx]==1) {
+				int by = y - yd[d];
+				int bx = x - xd[d];
+				if(by>=0 && by<n && bx>=0 && bx<m) {
+					if(map[by][bx]==1) {
 						break; // while문 종료  
 					}else { // 뒤쪽 벽이 막혀있지 않은 경우  
-						n=ny;
-						x=nx;
+						y=by;
+						x=bx;
 					}
 				}else {
 					break; // 로봇이 더이상 갈곳이 없어서 break;
