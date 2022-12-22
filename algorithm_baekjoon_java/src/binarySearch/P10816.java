@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-// 백준 알고리즘 10816번 숫자 카드 문제 풀이 - 이진 탐
+// 백준 알고리즘 10816번 숫자 카드 문제 풀이 - 이진 탐색 활용 
 
 public class P10816 {
 	
@@ -29,18 +29,24 @@ public class P10816 {
 		
 		
 		int m = Integer.parseInt(br.readLine());
-		numbers = new int[m];
-		answers = new int[m];
+		//numbers = new int[m];
+		//answers = new int[m];
 		
 		st=new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<m; i++) {
-			numbers[i]=Integer.parseInt(st.nextToken());
-			int count = upper_bound(0,cards.length,numbers[i])-lower_bound(0,cards.length,numbers[i]);
-			answers[i]=count;
+			int target=Integer.parseInt(st.nextToken());
+			int count = upper_bound(0,cards.length,target)-lower_bound(0,cards.length,target);
 			
-			System.out.print(answers[i]+" ");
+			sb.append(count+" ");
+			
+			//answers[i]=count;
+			
+			//System.out.print(answers[i]+" ");
 		}
 		
+		System.out.println(sb.toString());
+	
 		
 
 	}
@@ -51,19 +57,20 @@ public class P10816 {
 	// 하한은 찾고자 하는 값 이상의 값이 처음으로 나타나는 위치를 의미한다. 
 	// 왼쪽부터 볼 때 찾고자 하는값이 같거나 큰 경우를 처음 만나느 위치를 의미한다. 
 	public static int lower_bound (int start, int end, int target) {
-		if(start == end) {
-			return start;
+		
+		while(start<end) {
+			
+			int mid = (start+end)/2;
+			
+			if(target<=cards[mid]) {
+				end=mid;
+			}else {
+				start=mid+1;
+			}
+			
 		}
 		
-		int mid = (start+end)/2;
-		if(target<=cards[mid]) {
-			end=mid;
-			return lower_bound(start,end, target);
-		}else {
-			start=mid+1;
-			return lower_bound(start,end,target);
-		}
-		
+		return start;
 		
 	}
 	
@@ -71,19 +78,18 @@ public class P10816 {
 	// 상한은 찾고자 하는 값을 초과한 값을 처음 만나는 위치다. 
 	// 찾고자 하는 값이 더이상 넘어 갈 수 없는 위치를 의미한다. 
 	public static int upper_bound(int start, int end, int target) {
-		if(start == end) {
-			return start;
+		
+		while(start<end) {
+			int mid = (start+end)/2;
+			
+			if(target<cards[mid]) {
+				end=mid;
+			}else {
+				start=mid+1;
+			}
 		}
 		
-		int mid = (start+end)/2;
-		
-		if(target<cards[mid]) {
-			end=mid;
-			return upper_bound(start,end,target);
-		}else {
-			start =mid+1;
-			return upper_bound(start,end,target);
-		}
+		return start;
 		
 	}
 
