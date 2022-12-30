@@ -46,7 +46,6 @@ public class P11403 {
 			}
 			System.out.println();
 		}
-		
 
 	}
 
