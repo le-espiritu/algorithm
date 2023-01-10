@@ -1,5 +1,7 @@
 package BFS;
 
+// 백준 2178번 미로탐색 문제 -bfs 활용  
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
