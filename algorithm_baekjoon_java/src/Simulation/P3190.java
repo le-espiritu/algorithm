@@ -5,25 +5,30 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class P3190 {
+	
+	public static int n;
+	public static int[][] board;
+	public static List<Body> snake;
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int n = Integer.parseInt(br.readLine());
-		
-		int[][] board = new int[n+1][n+1];
+		n = Integer.parseInt(br.readLine());
+		board = new int[n+1][n+1];
 		
 		int k = Integer.parseInt(br.readLine());
 		
 		for(int i=0; i<k; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			int y = Integer.parseInt(st.nextToken());
 			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
 			
-			board[y][x]=1; // 1은 사과가 있음을 표시 
+			board[x][y]=1; // 1은 사과가 있음을 표시 
 		}
 		
 		HashMap<Integer, String> hash = new HashMap<>();
@@ -42,53 +47,67 @@ public class P3190 {
 		
 		int d = 0;
 		
-		Queue<Body> qu = new LinkedList<>();
+		snake = new LinkedList<>();
 		
 		int headX = 1;
 		int headY = 1;
 		
-		qu.offer(new Body(headX, headY));
-		board[headY][headX]=2;
+		snake.add(new Body(headX, headY));
 		
-		int second=1;
+		int second=0;
 		while(true) {
 			second++;
 			
-			int nY=headY+dy[d];
 			int nX=headX+dx[d];
+			int nY=headY+dy[d];
 			
-			if(nY>=1 && nY<n+1 && nX>=1 && nX<n+1) {
-				
-				if(board[nY][nX]==2) {
-					break;
-				}
-				
-				qu.offer(new Body(nX,nY));
-				if(board[nY][nX]!=1) {
-					Body tail = qu.poll();
-					board[tail.y][tail.x]=0;
-				}
-				board[nY][nX]=2;
-				headY=nY;
-				headX=nX;
-				
-				String direction = hash.get(second);
-				if(direction!=null) {
-					if(direction.equals("L")) {
-						d=(d+3)/4;
-					}else if(direction.equals("D")) {
-						d=(d+5)/4;
-					}
-				}
-				
-			}else {
+			
+			if(isFinished(nX,nY)==true) {
 				break;
 			}
+
+			if(board[nX][nY]==1) {
+				board[nX][nY]=0;
+				snake.add(new Body(nX,nY));
+				
+			}else {
+				snake.add(new Body(nX,nY));
+				snake.remove(0);
+			}
+			
+			headX=nX;
+			headY=nY;
+			
+			
+			String direction = hash.get(second);
+			if(direction!=null) {
+				if(direction.equals("L")) {
+					d=(d+3)%4;
+				}else if(direction.equals("D")) {
+					d=(d+5)%4;
+				}
+			}
+			
 			
 		}
 		
 		System.out.println(second);
 
+	}
+	
+	public static boolean isFinished(int nx, int ny) {
+		if(ny<1 || ny>n || nx<1 || nx>n) {
+			return true;
+		}
+		
+		for(int i=0; i<snake.size(); i++) {
+			Body body = snake.get(i);
+			if(nx==body.x && ny==body.y) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public static class Body{
