@@ -6,13 +6,14 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class P3190 {
+public class P3190_2 {
 	
 	public static int n;
 	public static int[][] board;
-	public static List<Body> snake;
+	public static Queue<Body> snake;
 	
 	public static int[] dy = {0,1,0,-1};
 	public static int[] dx = {1,0,-1,0};
@@ -45,6 +46,7 @@ public class P3190 {
 		
 		snake = new LinkedList<>();
 		snake.add(new Body(1,1));
+		board[1][1]=2;
 		
 		int cury =1;
 		int curx =1;
@@ -67,11 +69,13 @@ public class P3190 {
 			}
 			
 			if(board[ny][nx]==1) {
-				board[ny][nx]=0;
+				board[ny][nx]=2;
 				snake.add(new Body(ny,nx));
 			}else {
 				snake.add(new Body(ny,nx));
-				snake.remove(0);
+				board[ny][nx]=2;
+				Body tail = snake.poll();
+				board[tail.y][tail.x]=0;
 			}
 			
 			cury=ny;
@@ -98,11 +102,8 @@ public class P3190 {
 			return true;
 		}
 		
-		for(int i=0; i<snake.size(); i++) {
-			Body body = snake.get(i);
-			if(ny==body.y && nx==body.x) {
-				return true;
-			}
+		if(board[ny][nx]==2) {
+			return true;
 		}
 		
 		return false;
