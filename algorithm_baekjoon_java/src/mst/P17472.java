@@ -18,7 +18,6 @@ public class P17472 {
 	public static boolean[][] labelChk;
 	
 	public static List<Edge>[] graph;
-	public static boolean[][] bridgeChk;
 	
 	public static int[] dy = {0,1,0,-1};
 	public static int[] dx = {1,0,-1,0};
@@ -61,10 +60,9 @@ public class P17472 {
 			graph[i]=new ArrayList<>();
 		}
 		
-		bridgeChk = new boolean[n][m];
 		for(int i=0; i<n; i++) {
 			for(int j=0; j<m; j++) {
-				if(map[i][j]!=0 && bridgeChk[i][j]==false) {
+				if(map[i][j]!=0) {
 					makeBridge(i,j);
 				}
 			}
@@ -79,22 +77,26 @@ public class P17472 {
 		
 		while(!pq.isEmpty()) {
 			Edge nowEdge = pq.poll();
-			visited[nowEdge.v]=true;
-			cost+=nowEdge.cost;
 			
-			for(Edge next : graph[nowEdge.v]) {
-				if(visited[next.v]==false) {
-					pq.offer(next);
+			if(visited[nowEdge.v]==false) {
+				visited[nowEdge.v]=true;
+				cost+=nowEdge.cost;
+				
+				for(Edge next : graph[nowEdge.v]) {
+					if(visited[next.v]==false) {
+						pq.offer(next);
+					}
 				}
 			}
+			
 		}
 		
-//		for(int i=2; i<visited.length; i++) {
-//			if(visited[i]==false) {
-//				System.out.println(-1);
-//				return;
-//			}
-//		}
+		for(int i=2; i<visited.length; i++) {
+			if(visited[i]==false) {
+				System.out.println(-1);
+				return;
+			}
+		}
 		
 		System.out.println(cost);
 		
@@ -125,12 +127,14 @@ public class P17472 {
 		
 	}
 	
-	public static void makeBridge(int y, int x) {
+	public static void makeBridge(int y, int x ) {
 		Queue<int[]> qu = new LinkedList<>();
+		//bridgeChk=new boolean[n][m]; // 중요 
+		//다른분 코드에서 makeBridge 메소드를 호출할때마다 메소드 안에서 boolean배열이 생성되게 코드가 짜여 있었지만
+		//코드의 흐름을 자세히 보면 boolean체크 자체가 필요하지 않음 
 		
 		for(int i=0; i<4; i++) {
 			qu.offer(new int[]{y,x,0});
-			bridgeChk[y][x]=true;
 			
 			while(!qu.isEmpty()) {
 				int[] nowPoint = qu.poll();
@@ -141,7 +145,7 @@ public class P17472 {
 				int ny=nowY+dy[i];
 				int nx=nowX+dx[i];
 				
-				if(ny>=0 && ny<n && nx>=0 && nx<m && bridgeChk[ny][nx]==false) {
+				if(ny>=0 && ny<n && nx>=0 && nx<m ) {
 					if(map[ny][nx]!=map[y][x]) {
 						if(map[ny][nx]!=0) {
 							int fromLabel = map[y][x];
@@ -160,9 +164,6 @@ public class P17472 {
 			qu.clear();
 		}
 		
-		
-		
-		
 	}
 	
 	public static class Edge implements Comparable<Edge>{
@@ -178,7 +179,6 @@ public class P17472 {
 			return Integer.compare(this.cost, o.cost);
 		}
 	}
-	
 	
 
 }
