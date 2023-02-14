@@ -4,15 +4,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.PriorityQueue;
-import java.util.StringTokenizer;
 
 public class P2665 {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n =Integer.parseInt(br.readLine());
 		
-		int n = Integer.parseInt(br.readLine());
-		
-		int[][]map = new int[n][n];
+		int[][] map = new int[n][n];
+		int[][] dist = new int[n][n];
 		
 		for(int i=0; i<n; i++) {
 			String line = br.readLine();
@@ -23,13 +22,7 @@ public class P2665 {
 				}else if(room==0) {
 					map[i][j]=1;
 				}
-			}
-		}
-		
-		//다익스트라
-		int[][] dist = new int[n][n];
-		for(int i=0; i<n; i++) {
-			for(int j=0; j<n; j++) {
+				
 				dist[i][j]=Integer.MAX_VALUE;
 			}
 		}
@@ -38,23 +31,26 @@ public class P2665 {
 		int[] dx= {1,0,-1,0};
 		
 		PriorityQueue<Edge> pq = new PriorityQueue<>();
-		pq.offer(new Edge(0,0,0));
 		dist[0][0]=0;
+		pq.offer(new Edge(0,0,0));
 		
 		while(!pq.isEmpty()) {
-			Edge nowEdge =pq.poll();
+			Edge nowEdge = pq.poll();
 			
-			if(nowEdge.cost>dist[nowEdge.y][nowEdge.x]) {
+			int y = nowEdge.y;
+			int x = nowEdge.x;
+			
+			if(nowEdge.cost>dist[y][x]) {
 				continue;
 			}
 			
 			for(int i=0; i<4; i++) {
-				int ny = nowEdge.y+dy[i];
-				int nx = nowEdge.x+dx[i];
+				int ny = y+dy[i];
+				int nx = x+dx[i];
 				
 				if(ny>=0 && ny<n && nx>=0 && nx<n) {
-					if(dist[ny][nx]>map[nowEdge.y][nowEdge.x]+map[ny][nx]) {
-						dist[ny][nx]=map[nowEdge.y][nowEdge.x]+map[ny][nx];
+					if(dist[ny][nx]>nowEdge.cost+map[ny][nx]) {
+						dist[ny][nx]=nowEdge.cost+map[ny][nx];
 						pq.offer(new Edge(ny,nx,dist[ny][nx]));
 					}
 				}
@@ -64,20 +60,20 @@ public class P2665 {
 		System.out.println(dist[n-1][n-1]);
 		
 		
-
 	}
 	
 	public static class Edge implements Comparable<Edge>{
-		int x;
 		int y;
+		int x;
 		int cost;
 		
 		public Edge(int y, int x, int cost) {
-			this.x=x;
 			this.y=y;
+			this.x=x;
 			this.cost=cost;
 		}
-		
+
+		@Override
 		public int compareTo(Edge o) {
 			return Integer.compare(this.cost, o.cost);
 		}
