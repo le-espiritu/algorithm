@@ -27,7 +27,8 @@ public class P1854 {
 		//int[] dist = new int[n+1];
 		//Arrays.fill(dist, Integer.MAX_VALUE);
 		
-		PriorityQueue<Integer>[] dist = new PriorityQueue[n+1];
+		//최단거리 값들을 저장하기 위해 int[] 대신 PriorityQueue<Integer>[] 사용 
+ 		PriorityQueue<Integer>[] dist = new PriorityQueue[n+1];
 		for(int i=1; i<dist.length; i++) {
 			dist[i]= new PriorityQueue<>(Collections.reverseOrder()); // 우선순위큐 내림차순 정렬 
 		}
